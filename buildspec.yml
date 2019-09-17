@@ -5,7 +5,11 @@ phases:
     runtime-versions:
       nodejs: 10
     commands:
+<<<<<<< HEAD
       - echo "-----STARTING PRODUCTION BUILD----- for" $PARENT_STACK_NAME
+=======
+      - echo "-----STARTING PRODUCTION BUILD----- for " $PARENT_STACK_NAME
+>>>>>>> chore: pass stackname to codebuild so lambda can import value from it
       - git checkout master
       - git config --global user.email "rick.p.smit@gmail.com"
       - git config --global user.name "rickiesmooth"
