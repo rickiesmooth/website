@@ -6,7 +6,7 @@ phases:
       nodejs: 10
     commands:
       - echo "-----DEVELOPMENT BUILD-----"
-      - git checkout $(echo ${CODEBUILD_WEBHOOK_HEAD_REF} | cut -d '/' -f 3,4)
+      - git checkout $(echo ${CODEBUILD_WEBHOOK_HEAD_REF} | cut -d '/' -f 3,4,5,6)
       - git config --global user.email "rick.p.smit@gmail.com"
       - git config --global user.name "rickiesmooth"
       - git config --global credential.helper 'store'
