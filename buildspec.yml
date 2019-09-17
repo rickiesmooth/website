@@ -5,7 +5,7 @@ phases:
     runtime-versions:
       nodejs: 10
     commands:
-      - echo "Starting Production Build > Setting up Git"
+      - echo "-----STARTING PRODUCTION BUILD----- for " $PARENT_STACK_NAME
       - git checkout master
       - git config --global user.email "rick.p.smit@gmail.com"
       - git config --global user.name "rickiesmooth"
@@ -40,7 +40,7 @@ phases:
         ./frontend/build/index.html s3://${DEPLOY_BUCKET}/
       - >
         aws cloudfront create-invalidation --distribution-id ${DISTRIBUTION_ID} 
-        --paths "/index.*"
+        --paths "/*"
 cache:
   paths:
     - "**/node_modules/**/*"

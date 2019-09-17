@@ -148,6 +148,9 @@ Resources:
           - Name: DISTRIBUTION_ID
             Value: !Ref Distribution
             Type: PLAINTEXT
+          - Name: PARENT_STACK_NAME
+            Value: !Sub ${AWS::StackName}
+            Type: PLAINTEXT
   PipelineBucket:
     Type: "AWS::S3::Bucket"
     Properties: {}
@@ -194,22 +197,22 @@ Resources:
     Properties:
       HostedZoneId: !Ref HostedZoneID
       RecordSets:
-        - Name: !Join ["", ["api.", !GetAtt RecordSetDomainName]]
+        - Name: !Join ["", ["api.", !Ref RecordSetDomainName]]
           Type: A
           AliasTarget:
             HostedZoneId: !GetAtt ApiGatewayDomainName.DistributionHostedZoneId
-            DNSName: !GetAtt ApiGatewayDomainName.DomainName
+            DNSName: !GetAtt ApiGatewayDomainName.DistributionDomainName
   ApiGatewayDomainName:
     Type: AWS::ApiGateway::DomainName
     Properties:
       CertificateArn: !Ref CertificateArn
-      DomainName: !Join ["", ["api.", !GetAtt RecordSetDomainName]]
+      DomainName: !Join ["", ["api.", !Ref RecordSetDomainName]]
       EndpointConfiguration:
         Types:
           - EDGE
 Outputs:
   DomainName:
     Description: The Domain name
-    Value: !Ref RecordSetDomainName
+    Value: !Join ["", ["api.", !Ref RecordSetDomainName]]
     Export:
       Name: !Sub ${AWS::StackName}-DomainName

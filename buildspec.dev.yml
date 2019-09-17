@@ -5,7 +5,7 @@ phases:
     runtime-versions:
       nodejs: 10
     commands:
-      - echo "-----DEVELOPMENT BUILD-----"
+      - echo "-----STARTING DEVELOP BUILD----- for" $PARENT_STACK_NAME
       - git checkout $(echo ${CODEBUILD_WEBHOOK_HEAD_REF} | cut -d '/' -f 3,4,5,6)
       - git config --global user.email "rick.p.smit@gmail.com"
       - git config --global user.name "rickiesmooth"
