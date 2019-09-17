@@ -5,7 +5,7 @@ phases:
     runtime-versions:
       nodejs: 10
     commands:
-      - echo "-----STARTING PRODUCTION BUILD----- for " $PARENT_STACK_NAME
+      - echo "-----STARTING PRODUCTION BUILD----- for" $PARENT_STACK_NAME
       - git checkout master
       - git config --global user.email "rick.p.smit@gmail.com"
       - git config --global user.name "rickiesmooth"
