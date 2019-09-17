@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "lambdas/*"
+  ],
+  "scripts": {
+    "dev": "dotenv lerna run dev --stream",
+    "deploy": "lerna run deploy",
+    "test": "lerna run test",
+    "remove": "lerna run remove",
+    "watch": "lerna exec --parallel -- rollup -f cjs -i src/index.js -o dist/index.js -w",
+    "version:ci": "lerna version",
+    "build": "lerna run build"
+  },
+  "devDependencies": {
+    "jest": "24.7.1",
+    "lerna": "^3.16.4",
+    "nock": "^11.3.3",
+    "prettier": "^1.17.1"
+  },
+  "author": "Rick Smit",
+  "license": "MIT",
+  "name": "website-rick-smit",
+  "dependencies": {}
+}

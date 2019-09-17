@@ -1,0 +1,45 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 10
+    commands:
+      - echo "-----DEVELOPMENT BUILD-----"
+      - git checkout $(echo ${CODEBUILD_WEBHOOK_HEAD_REF} | cut -d '/' -f 3,4)
+      - git config --global user.email "rick.p.smit@gmail.com"
+      - git config --global user.name "rickiesmooth"
+      - git config --global credential.helper 'store'
+      - echo "https://rickiesmooth:${GITHUB_TOKEN}@github.com" > ~/.git-credentials
+      - echo performing install phase ${GITHUB_TOKEN} ${PIPELINE_BUCKET}
+      - npm install -g yarn
+  pre_build:
+    commands:
+      - echo performing pre_build phase
+      - yarn install --frozen-lockfile
+  build:
+    commands:
+      - echo performing build phase
+      # - yarn prettier:ci
+      # - yarn lint
+      - PR_STACKNAME=$(echo ${CODEBUILD_WEBHOOK_TRIGGER} | tr / -)
+      - DEPLOYED_STACKNAME="website-lambda-${PR_STACKNAME}"
+      - yarn test
+      - yarn run version:ci -y prerelease
+      - echo "DEPLOYING PR ${PR_STACKNAME}"
+      - yarn run deploy
+      - yarn run build
+  post_build:
+    commands:
+      - |
+        if expr "${CODEBUILD_WEBHOOK_EVENT}" : "PULL_REQUEST_MERGED"; then
+          echo 'removed skipping post_build'
+        else
+          # copy the contents of /build to S3
+          aws s3 cp --recursive --acl public-read ./frontend/build s3://${DEPLOY_BUCKET}/
+          aws s3 cp --acl public-read  --cache-control="max-age=0, no-cache, no-store, must-revalidate"  ./frontend/build/index.html s3://${DEPLOY_BUCKET}/
+          aws cloudfront create-invalidation --distribution-id ${DISTRIBUTION_ID} --paths "/index.*"
+        fi
+cache:
+  paths:
+    - "**/node_modules/**/*"

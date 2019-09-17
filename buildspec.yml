@@ -1,0 +1,47 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 10
+    commands:
+      - echo "Starting Production Build > Setting up Git"
+      - git checkout master
+      - git config --global user.email "rick.p.smit@gmail.com"
+      - git config --global user.name "rickiesmooth"
+      - git config --global credential.helper 'store'
+      - echo "https://rickiesmooth:${GITHUB_TOKEN}@github.com" > ~/.git-credentials
+      - echo performing install phase ${GITHUB_TOKEN} ${PIPELINE_BUCKET}
+      # Setup for Yarn
+      - npm install -g yarn
+  pre_build:
+    commands:
+      - echo performing pre_build phase
+      - yarn install --frozen-lockfile
+      - REMOVED_STACKNAME=website-lambda-$(echo ${CODEBUILD_WEBHOOK_TRIGGER} | tr / -)
+      - yarn run remove
+  build:
+    commands:
+      - echo "Webhook was triggered by ${CODEBUILD_WEBHOOK_TRIGGER}"
+      # - yarn prettier:ci
+      # - yarn lint
+      - yarn test
+      - DEPLOYED_STACKNAME="website-lambda"
+      - yarn run version:ci -y minor
+      - yarn run deploy
+      - yarn run build
+
+  post_build:
+    commands:
+      # copy the contents of /build to S3
+      - aws s3 cp --recursive --acl public-read ./frontend/build s3://${DEPLOY_BUCKET}/
+      - >
+        aws s3 cp --acl public-read 
+        --cache-control="max-age=0, no-cache, no-store, must-revalidate" 
+        ./frontend/build/index.html s3://${DEPLOY_BUCKET}/
+      - >
+        aws cloudfront create-invalidation --distribution-id ${DISTRIBUTION_ID} 
+        --paths "/index.*"
+cache:
+  paths:
+    - "**/node_modules/**/*"

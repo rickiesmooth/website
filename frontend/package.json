@@ -1,0 +1,17 @@
+{
+  "name": "frontend",
+  "private": true,
+  "version": "0.3.0",
+  "description": "frontend for website",
+  "main": "index.js",
+  "scripts": {
+    "dev": "serve",
+    "write-outputs": "aws cloudformation describe-stacks --stack-name $DEPLOYED_STACKNAME --query 'Stacks[0].Outputs' --output json  > scripts/outputs.json",
+    "build": "npm run write-outputs && node scripts/build.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "serve": "^11.1.0"
+  }
+}
