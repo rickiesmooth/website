@@ -121,4 +121,9 @@
     element.innerHTML = "";
     element.append(fragment);
   }
+
+  console.log(
+    "%c thank you for your interest, you can check the full sourcecode at https://github.com/rickiesmooth/website",
+    "color: yellow"
+  );
 })();

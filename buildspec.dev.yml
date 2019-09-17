@@ -25,10 +25,10 @@ phases:
       - PR_STACKNAME=$(echo ${CODEBUILD_WEBHOOK_TRIGGER} | tr / -)
       - DEPLOYED_STACKNAME="website-lambda-${PR_STACKNAME}"
       - yarn test
-      - yarn run version:ci -y prerelease
       - echo "DEPLOYING PR ${PR_STACKNAME}"
       - yarn run deploy
       - yarn run build
+      - yarn run version:ci -y prerelease
   post_build:
     commands:
       - |

@@ -12,7 +12,6 @@ phases:
       - git config --global credential.helper 'store'
       - echo "https://rickiesmooth:${GITHUB_TOKEN}@github.com" > ~/.git-credentials
       - echo performing install phase ${GITHUB_TOKEN} ${PIPELINE_BUCKET}
-      # Setup for Yarn
       - npm install -g yarn
   pre_build:
     commands:

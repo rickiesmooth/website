@@ -1,7 +1,7 @@
 {
   "name": "@lambdas/fetch-contributions",
   "private": true,
-  "version": "0.3.0",
+  "version": "0.0.2-alpha.2",
   "description": "fetch contributions of user github",
   "main": "app.js",
   "repository": "https://github.com/awslabs/aws-sam-cli/tree/develop/samcli/local/init/templates/cookiecutter-aws-sam-hello-nodejs",
