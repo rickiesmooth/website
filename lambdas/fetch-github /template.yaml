@@ -32,10 +32,10 @@ Resources:
   BasePathMapping:
     Type: AWS::ApiGateway::BasePathMapping
     Properties:
-      BasePath: /
+      BasePath: ""
       DomainName:
         Fn::ImportValue: !Sub ${ParentStackName}-DomainName
-      RestApiId: !Ref RestApi
+      RestApiId: !Ref ServerlessRestApi
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
