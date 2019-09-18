@@ -30,7 +30,7 @@ Resources:
     Type: AWS::ApiGateway::BasePathMapping
     Properties:
       BasePath: ""
-      Stage: Prod
+      Stage: prod
       DomainName:
         Fn::ImportValue: !Sub ${ParentStackName}-DomainName
       RestApiId: !Ref ServerlessRestApi
