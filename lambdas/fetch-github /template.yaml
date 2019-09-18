@@ -3,9 +3,6 @@ Transform: AWS::Serverless-2016-10-31
 Description: SAM Template for fetch function
 
 Parameters:
-  GithubAccessToken:
-    Type: String
-    Default: ""
   ParentStackName:
     Type: String
     Default: ""
@@ -22,7 +19,7 @@ Resources:
       Runtime: nodejs8.10
       Environment:
         Variables:
-          GITHUB_TOKEN: !Ref GithubAccessToken
+          GITHUB_TOKEN: !Sub ${ParentStackName}-Token
       Events:
         Contributions:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -33,6 +30,7 @@ Resources:
     Type: AWS::ApiGateway::BasePathMapping
     Properties:
       BasePath: ""
+      Stage: Prod
       DomainName:
         Fn::ImportValue: !Sub ${ParentStackName}-DomainName
       RestApiId: !Ref ServerlessRestApi
