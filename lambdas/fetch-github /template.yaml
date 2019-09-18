@@ -34,6 +34,7 @@ Resources:
       DomainName:
         Fn::ImportValue: !Sub ${ParentStackName}-DomainName
       RestApiId: !Ref ServerlessRestApi
+    DependsOn: ApiGatewayDeployment
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
