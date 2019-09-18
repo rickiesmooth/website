@@ -136,6 +136,9 @@ Resources:
         Type: LINUX_CONTAINER
         Image: "aws/codebuild/amazonlinux2-x86_64-standard:1.0"
         EnvironmentVariables:
+          - Name: GITHUB_TOKEN
+            Value: !Ref GithubOAuthToken
+            Type: PLAINTEXT
           - Name: PIPELINE_BUCKET
             Value: !Ref PipelineBucket
             Type: PLAINTEXT

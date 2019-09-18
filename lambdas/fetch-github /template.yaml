@@ -3,9 +3,6 @@ Transform: AWS::Serverless-2016-10-31
 Description: SAM Template for fetch function
 
 Parameters:
-  GithubAccessToken:
-    Type: String
-    Default: ""
   ParentStackName:
     Type: String
     Default: ""
@@ -15,6 +12,10 @@ Globals:
     Timeout: 3
 
 Resources:
+  FetchGithubDataApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
   FetchGithubDataFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
@@ -22,25 +23,25 @@ Resources:
       Runtime: nodejs8.10
       Environment:
         Variables:
-          GITHUB_TOKEN: !Ref GithubAccessToken
+          GITHUB_TOKEN: !Sub ${ParentStackName}-Token
       Events:
         Contributions:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
+            RestApiId: !Ref "FetchGithubDataApiGateway"
             Path: /github
             Method: get
   BasePathMapping:
     Type: AWS::ApiGateway::BasePathMapping
     Properties:
       BasePath: ""
+      Stage: !Ref FetchGithubDataApiGateway.Stage
       DomainName:
         Fn::ImportValue: !Sub ${ParentStackName}-DomainName
-      RestApiId: !Ref ServerlessRestApi
+      RestApiId: !Ref FetchGithubDataApiGateway
+    DependsOn: FetchGithubDataApiGateway
 
 Outputs:
-  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
-  # Find out more about other implicit resources you can reference within SAM
-  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
   FetchGithubDataApi:
-    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/github/"
+    Description: "API Gateway endpoint URL for Prod stage for FetchGithubDataFunction function"
+    Value: !Sub "https://${FetchGithubDataApiGateway}.execute-api.${AWS::Region}.amazonaws.com/Prod/github/"
