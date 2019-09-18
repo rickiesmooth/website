@@ -6,6 +6,9 @@ Parameters:
   GithubAccessToken:
     Type: String
     Default: ""
+  ParentStackName:
+    Type: String
+    Default: ""
 
 Globals:
   Function:
@@ -26,6 +29,13 @@ Resources:
           Properties:
             Path: /github
             Method: get
+  BasePathMapping:
+    Type: AWS::ApiGateway::BasePathMapping
+    Properties:
+      BasePath: ""
+      DomainName:
+        Fn::ImportValue: !Sub ${ParentStackName}-DomainName
+      RestApiId: !Ref ServerlessRestApi
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function

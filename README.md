@@ -1,5 +1,7 @@
 ![Build Status](https://codebuild.eu-central-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiV1V2VDZnYUxxVDNiWFVOc0ExSy9PQ2M3MUdaUjUzSEFVUk8wRkpKUEdkOG1DbzJwbHdYL1cvb0RFMGdqbzlGeXJuWnR6Nm5MQ0VzK2x6aDM0VVNkbGVBPSIsIml2UGFyYW1ldGVyU3BlYyI6IlY2Vm84dHcyYmVrRDVWSG0iLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
 
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=rickiesmooth/website)](https://dependabot.com)
+
 # website
 
 personal website

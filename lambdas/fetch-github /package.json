@@ -1,7 +1,7 @@
 {
   "name": "@lambdas/fetch-contributions",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1-alpha.1",
   "description": "fetch contributions of user github",
   "main": "app.js",
   "repository": "https://github.com/awslabs/aws-sam-cli/tree/develop/samcli/local/init/templates/cookiecutter-aws-sam-hello-nodejs",
@@ -11,7 +11,7 @@
     "test": "jest",
     "dev": "sam local start-api --parameter-overrides ParameterKey=GithubAccessToken,ParameterValue=$GITHUB_TOKEN",
     "deploy:package": "sam package --output-template-file packaged.yaml --s3-bucket $PIPELINE_BUCKET",
-    "deploy:aws": "aws cloudformation deploy --parameter-overrides GithubAccessToken=$GITHUB_TOKEN --template-file packaged.yaml --stack-name $DEPLOYED_STACKNAME --capabilities CAPABILITY_IAM",
+    "deploy:aws": "aws cloudformation deploy --parameter-overrides GithubAccessToken=$GITHUB_TOKEN ParentStackName=$PARENT_STACK_NAME --template-file packaged.yaml --stack-name $DEPLOYED_STACKNAME --capabilities CAPABILITY_IAM",
     "deploy": "npm run deploy:package && npm run deploy:aws",
     "remove": "aws cloudformation delete-stack --stack-name $REMOVED_STACKNAME"
   },

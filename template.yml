@@ -136,9 +136,6 @@ Resources:
         Type: LINUX_CONTAINER
         Image: "aws/codebuild/amazonlinux2-x86_64-standard:1.0"
         EnvironmentVariables:
-          - Name: GITHUB_TOKEN
-            Value: !Ref GithubOAuthToken
-            Type: PLAINTEXT
           - Name: PIPELINE_BUCKET
             Value: !Ref PipelineBucket
             Type: PLAINTEXT
@@ -147,6 +144,9 @@ Resources:
             Type: PLAINTEXT
           - Name: DISTRIBUTION_ID
             Value: !Ref Distribution
+            Type: PLAINTEXT
+          - Name: PARENT_STACK_NAME
+            Value: !Sub ${AWS::StackName}
             Type: PLAINTEXT
   PipelineBucket:
     Type: "AWS::S3::Bucket"
@@ -194,22 +194,27 @@ Resources:
     Properties:
       HostedZoneId: !Ref HostedZoneID
       RecordSets:
-        - Name: !Join ["", ["api.", !GetAtt RecordSetDomainName]]
+        - Name: !Join ["", ["api.", !Ref RecordSetDomainName]]
           Type: A
           AliasTarget:
             HostedZoneId: !GetAtt ApiGatewayDomainName.DistributionHostedZoneId
-            DNSName: !GetAtt ApiGatewayDomainName.DomainName
+            DNSName: !GetAtt ApiGatewayDomainName.DistributionDomainName
   ApiGatewayDomainName:
     Type: AWS::ApiGateway::DomainName
     Properties:
       CertificateArn: !Ref CertificateArn
-      DomainName: !Join ["", ["api.", !GetAtt RecordSetDomainName]]
+      DomainName: !Join ["", ["api.", !Ref RecordSetDomainName]]
       EndpointConfiguration:
         Types:
           - EDGE
 Outputs:
   DomainName:
     Description: The Domain name
-    Value: !Ref RecordSetDomainName
+    Value: !Join ["", ["api.", !Ref RecordSetDomainName]]
     Export:
       Name: !Sub ${AWS::StackName}-DomainName
+  GithubToken:
+    Description: GithubToken
+    Value: !Ref GithubOAuthToken
+    Export:
+      Name: !Sub ${AWS::StackName}-Token
