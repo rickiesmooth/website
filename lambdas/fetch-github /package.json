@@ -9,23 +9,11 @@
   "license": "MIT",
   "scripts": {
     "test": "jest",
-    "dev": "sam local start-api --parameter-overrides ParameterKey=GithubAccessToken,ParameterValue=$GITHUB_TOKEN",
+    "dev": "sam local start-api --parameter-overrides ParameterKey=ParentStackName,ParameterValue=personal-website",
     "deploy:package": "sam package --output-template-file packaged.yaml --s3-bucket $PIPELINE_BUCKET",
     "deploy:aws": "aws cloudformation deploy --parameter-overrides GithubAccessToken=$GITHUB_TOKEN ParentStackName=$PARENT_STACK_NAME --template-file packaged.yaml --stack-name $DEPLOYED_STACKNAME --capabilities CAPABILITY_IAM",
     "deploy": "npm run deploy:package && npm run deploy:aws",
     "remove": "aws cloudformation delete-stack --stack-name $REMOVED_STACKNAME"
-  },
-  "jest": {
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.js?$",
-    "moduleFileExtensions": [
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ],
-    "reporters": [
-      "default"
-    ]
   },
   "dependencies": {
     "@lambdas/common": "file:../common"
