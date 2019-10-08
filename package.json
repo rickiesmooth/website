@@ -6,7 +6,7 @@
   ],
   "scripts": {
     "dev": "dotenv lerna run dev --stream",
-    "deploy": "lerna run deploy",
+    "deploy": "lerna run deploy --scripts-prepend-node-path",
     "test": "lerna run test",
     "remove": "lerna run remove",
     "version:ci": "lerna version",
