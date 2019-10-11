@@ -1,6 +1,5 @@
 (function() {
-  // const GITHUB_SERVICE = "https://api.ricksm.it/github";
-  const GITHUB_SERVICE = "http://localhost:3000/github";
+  const GITHUB_SERVICE = "https://api.ricksm.it/github";
 
   initExperience();
 
