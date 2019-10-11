@@ -1,5 +1,6 @@
 (function() {
-  const GITHUB_SERVICE = "https://api.ricksm.it/github";
+  // const GITHUB_SERVICE = "https://api.ricksm.it/github";
+  const GITHUB_SERVICE = "http://localhost:3000/github";
 
   initExperience();
 
@@ -29,8 +30,8 @@
   }
 
   function initContributions(contributions) {
-    const links = contributions.map(({ nameWithOwner, url }) => ({
-      title: createLink(url, nameWithOwner)
+    const links = contributions.map(({ repo, url }) => ({
+      title: createLink(url, repo)
     }));
 
     createList("contributions-list", links);

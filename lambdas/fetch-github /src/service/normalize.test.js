@@ -8,7 +8,7 @@ describe("fetch-github/service/normalize", function() {
 
     expect(data.contributions).toStrictEqual([
       {
-        nameWithOwner: "necolas/react-native-web",
+        repo: "necolas/react-native-web",
         url: "https://github.com/necolas/react-native-web"
       }
     ]);
