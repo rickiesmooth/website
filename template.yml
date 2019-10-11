@@ -20,7 +20,7 @@ Parameters:
     Description: "Domain name traffic should be routed to"
   HostedZoneID:
     Type: String
-    Description: "Hosted zone id domain is part of"
+    Description: "Hosted zone ID domain is part of"
   EnvType:
     Description: Environment type.
     Default: test

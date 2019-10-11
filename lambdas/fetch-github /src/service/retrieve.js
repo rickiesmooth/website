@@ -15,9 +15,8 @@ const query = JSON.stringify({
   query: `
     {
       viewer {
-        repositoriesContributedTo(first: 100, contributionTypes: [COMMIT, ISSUE, PULL_REQUEST, REPOSITORY]) {
+        pullRequests(first: 100 orderBy: {field:CREATED_AT, direction:DESC}) {
           nodes {
-            nameWithOwner
             url
           }
         }

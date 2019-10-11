@@ -9,6 +9,7 @@ class GithubService {
   retrieve() {
     return this.fetch().then(response => {
       const { data, errors } = this.normalize(response);
+      console.log(data);
       return {
         data: JSON.stringify(data),
         errors: JSON.stringify(errors)

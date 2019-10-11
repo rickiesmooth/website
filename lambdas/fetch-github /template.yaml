@@ -15,6 +15,7 @@ Resources:
   FetchGithubDataApiGateway:
     Type: AWS::Serverless::Api
     Properties:
+      Cors: "'*'"
       StageName: Prod
   FetchGithubDataFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -23,7 +24,8 @@ Resources:
       Runtime: nodejs8.10
       Environment:
         Variables:
-          GITHUB_TOKEN: !Sub ${ParentStackName}-Token
+          GITHUB_TOKEN:
+            Fn::ImportValue: !Sub ${ParentStackName}-Token
       Events:
         Contributions:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
