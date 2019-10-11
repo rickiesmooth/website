@@ -1,10 +1,9 @@
 {
   "data": {
     "viewer": {
-      "repositoriesContributedTo": {
+      "pullRequests": {
         "nodes": [
           {
-            "nameWithOwner": "necolas/react-native-web",
             "url": "https://github.com/necolas/react-native-web"
           }
         ]
