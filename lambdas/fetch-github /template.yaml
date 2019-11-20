@@ -36,7 +36,6 @@ Resources:
   BasePathMapping:
     Type: AWS::ApiGateway::BasePathMapping
     Properties:
-      BasePath: "github"
       Stage: !Ref FetchGithubDataApiGateway.Stage
       DomainName:
         Fn::ImportValue: !Sub ${ParentStackName}-DomainName
