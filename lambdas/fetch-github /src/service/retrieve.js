@@ -18,6 +18,9 @@ const query = JSON.stringify({
         pullRequests(first: 100 orderBy: {field:CREATED_AT, direction:DESC}) {
           nodes {
             url
+            repository {
+              isPrivate
+				    }
           }
         }
         itemShowcase {
@@ -49,7 +52,9 @@ const query = JSON.stringify({
 
 exports.fetchGithubData = () => {
   if (!process.env.GITHUB_TOKEN) {
-    return { errors: "No GitHub API key provided" };
+    return Promise.resolve({
+      errors: `No GitHub API key provided`
+    });
   }
   return httpsRequest(githubOptions, query)
     .then(res => JSON.parse(res))

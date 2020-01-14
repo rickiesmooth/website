@@ -4,7 +4,8 @@
       "pullRequests": {
         "nodes": [
           {
-            "url": "https://github.com/necolas/react-native-web"
+            "url": "https://github.com/necolas/react-native-web",
+            "repository": { "isPrivate": false }
           }
         ]
       },

@@ -24,7 +24,8 @@ exports.normalizeGithubData = ({ errors, data }) => {
           pr =>
             !pr.url.includes("/vigour-io/") &&
             !pr.url.includes("/rickiesmooth/") &&
-            !pr.url.includes("/ubertrace/")
+            !pr.url.includes("/ubertrace/") &&
+            !pr.repository.isPrivate
         )
         .map(pr => {
           const [_, owner, repoName] = url.parse(pr.url).pathname.split("/");
