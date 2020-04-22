@@ -16,7 +16,7 @@
     "jest": "24.9.0",
     "lerna": "^3.16.4",
     "nock": "^11.3.3",
-    "prettier": "^1.17.1"
+    "prettier": "^2.0.5"
   },
   "author": "Rick Smit",
   "license": "MIT",
